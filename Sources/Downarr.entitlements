@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- Required for every Mac App Store app. -->
+	<key>com.apple.security.app-sandbox</key>
+	<true/>
+	<!-- Outgoing HTTP to the user's Sonarr, Radarr, Jellyfin, NZBGet and Deluge servers. -->
+	<key>com.apple.security.network.client</key>
+	<true/>
+	<!-- Jellyfin "upload image" picks a file through NSOpenPanel. -->
+	<key>com.apple.security.files.user-selected.read-only</key>
+	<true/>
+</dict>
+</plist>

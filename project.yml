@@ -1,0 +1,59 @@
+name: Downarr
+options:
+  bundleIdPrefix: com.jakewatts
+  deploymentTarget:
+    macOS: "14.0"
+  createIntermediateGroups: true
+  groupSortPosition: top
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    MARKETING_VERSION: "1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    # Signing for App Store archives (./archive.sh). ./build.sh overrides this with
+    # CODE_SIGNING_ALLOWED=NO, so everyday local builds stay unsigned.
+    DEVELOPMENT_TEAM: J4UJD4Z33J
+    CODE_SIGN_STYLE: Automatic
+    CODE_SIGN_ENTITLEMENTS: Sources/Downarr.entitlements
+    ENABLE_HARDENED_RUNTIME: "YES"
+    ENABLE_APP_SANDBOX: "YES"
+    ENABLE_OUTGOING_NETWORK_CONNECTIONS: "YES"
+    ENABLE_USER_SCRIPT_SANDBOXING: "NO"
+    DEAD_CODE_STRIPPING: "YES"
+    SWIFT_STRICT_CONCURRENCY: minimal
+    COMBINE_HIDPI_IMAGES: "YES"
+    ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+    ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+targets:
+  Downarr:
+    type: application
+    platform: macOS
+    sources:
+      - path: Sources/Downarr
+      - path: Sources/Resources
+        buildPhase: resources
+        excludes:
+          - AppIcon.icns  # ./build-clt.sh only; Xcode builds the icon from Assets.xcassets
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.jakewatts.downarr
+        PRODUCT_NAME: Downarr
+    info:
+      path: Sources/Info.plist
+      properties:
+        CFBundleName: Downarr
+        CFBundleIconName: AppIcon
+        CFBundleDisplayName: Downarr
+        CFBundlePackageType: APPL
+        CFBundleShortVersionString: "1.0"
+        CFBundleVersion: "1"
+        LSMinimumSystemVersion: "14.0"
+        LSApplicationCategoryType: public.app-category.utilities
+        NSHighResolutionCapable: true
+        NSLocalNetworkUsageDescription: Downarr connects to your Sonarr, Radarr, Jellyfin, NZBGet and Deluge servers on your local network.
+        NSHumanReadableCopyright: "© 2026 Jake Watts"
+        ITSAppUsesNonExemptEncryption: false
+        # Plain HTTP is allowed to local-network hosts only. Remote servers need HTTPS.
+        # (NSAllowsArbitraryLoads was removed: macOS ignores it when NSAllowsLocalNetworking is set.)
+        NSAppTransportSecurity:
+          NSAllowsLocalNetworking: true
